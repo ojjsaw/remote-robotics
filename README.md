@@ -2,7 +2,7 @@
 
 ## Run openvino dev container to download model.
 ```
-docker run -it --rm -v $(pwd):/workdir openvino/ubuntu18_dev:latest
+docker run --network host -it --rm -v $(pwd):/workdir openvino/ubuntu18_dev:latest
 cd /workdir/
  /opt/intel/openvino/deployment_tools/tools/model_downloader/downloader.py --name pedestrian-and-vehicle-detector-adas-0001
 ```
@@ -52,4 +52,22 @@ python -m pip install -r requirements.txt
 apt-get update
 apt-get install -y libgl1-mesa-dev
 apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6
+```
+
+# DLStreamer
+
+```
+docker run --network host -it --rm -v $(pwd):/workdir openvino/ubuntu18_data_dev:latest
+cd /workdir/
+```
+
+```
+docker run --network host -d --rm --name dlstreamer_mqtt -p 1883:1883 -p 9001:9001 eclipse-mosquitto
+docker exec -it dlstreamer_mqtt sh
+mosquitto_sub -h localhost -t dlstreamer
+```
+
+```
+# in data dev openvino container
+./metapublish.sh https://github.com/intel-iot-devkit/sample-videos/raw/master/head-pose-face-detection-female-and-male.mp4 mqtt
 ```
