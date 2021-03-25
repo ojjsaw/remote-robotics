@@ -53,6 +53,7 @@ docker run --network host -it --rm -v $(pwd):/workdir -v ~/.Xauthority:/root/.Xa
 
 cd /workdir/
 
+python3 -m pip install -r grpc-client-requirements.txt
 
 ```
 
