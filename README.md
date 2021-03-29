@@ -6,7 +6,7 @@ OpenVINO Toolkit provides two utilities for quick AI Deployment:
 ## Pre-req for comparison
 - single FP16-INT8 pre-trained model that is already available in both approaches.
 - same video file with resolution already in target model input size to ensure the data transmitted is similar (e.g. grpc resize on client, vs dlstreamer resized on server)
-- ensure clients'/server all are in local docker containers on a private network
+- ensure clients'/server all are using localhost
 
 
 ## Approach for comparison
@@ -30,8 +30,7 @@ while(!EOF)
                                 gst transformFrame
                                 gst inference
                                 gst convertresultdata
-// client.py <---mqttbroker---- gst mqttpublish
-print currtime
+                                print currtime
 
 
 /**** Compare *****/
@@ -46,7 +45,6 @@ Outcome: X time taken e2e to process N frames (excluding overheads)
 ```
 docker pull openvino/model_server:latest
 docker pull openvino/ubuntu18_data_dev:latest
-docker pull eclipse-mosquitto
 
 // download vehicle-detection-adas-0002 IR model if not present in repo already.
 ```
@@ -67,14 +65,19 @@ python3 -m pip install -r grpc-client-requirements.txt
 python3 grpc-client.py
 ```
 
-### Run grpc - OpenVINO Model Server
+### Run DLStreamer
 ```
+// run DL Streamer
 docker run --network host -it --rm -v $(pwd):/workdir -v ~/.Xauthority:/root/.Xauthority -v /tmp/.X11-unix/:/tmp/.X11-unix/ -e DISPLAY=$DISPLAY openvino/ubuntu18_data_dev:latest
-```
 
-### Example for streamfrmvideo.sh
-```
-// to stream basic (non-optimal)
+// python result of gstreamer inference
+gst-launch-1.0 filesrc location=test.sdp ! sdpdemux timeout=0 ! \
+decodebin ! \
+gvainference model=intel/vehicle-detection-adas-0002/1/vehicle-detection-adas-0002.xml device=CPU ! queue ! \
+gvapython module=dlstreamer-result-sender.py ! \
+fakesink sync=false
+
+// Start streaming basic (non-optimal)
 ffmpeg \
     -re \
     -i test.mp4 \
@@ -83,27 +86,14 @@ ffmpeg \
     -f rtp \
     -sdp_file test.sdp \
     "rtp://127.0.0.1:5000"
-
-// to playback and test
-gst-launch-1.0 \
-    filesrc location=test.sdp \
-    ! sdpdemux timeout=0 ! queue \
-    ! rtph264depay ! h264parse ! avdec_h264 \
-    ! videoconvert ! autovideosink
-
-// to infer and render basic (non-optimal)
-gst-launch-1.0 filesrc location=test.sdp ! sdpdemux timeout=0 ! \
-decodebin ! \
-gvadetect model=intel/vehicle-detection-adas-0002/1/vehicle-detection-adas-0002.xml device=CPU ! queue ! \
-gvawatermark ! videoconvert ! fpsdisplaysink video-sink=xvimagesink sync=false
-
-// to console json
-gst-launch-1.0 filesrc location=test.sdp ! sdpdemux timeout=0 ! \
-decodebin ! \
-gvadetect model=intel/vehicle-detection-adas-0002/1/vehicle-detection-adas-0002.xml device=CPU ! queue ! \
-gvametaconvert add-empty-results=true ! \
-gvametapublish method=file ! \
-fakesink sync=false
-
 ```
+## Results
 
+- ### Input Clip
+    - h264 encoded, 672x384 (target FP16-INT8 model input size)
+    - 25fps, length: 21sec
+- ### DLStreamer (FFMPEG + GSTREAMER + OPENVINO - 1 way)
+![OMS](dlstreamer-8thgeni7yoga.png)
+
+- ### ModelServer (OPENCV + GRPC - 2 way)
+![OMS](modelserver-8thgeni7yoga.png)
