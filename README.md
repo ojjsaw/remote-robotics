@@ -93,7 +93,10 @@ ffmpeg \
     - h264 encoded, 672x384 (target FP16-INT8 model input size)
     - 25fps, length: 21sec
 - ### DLStreamer (FFMPEG + GSTREAMER + OPENVINO - 1 way)
-![OMS](dlstreamer-8thgeni7yoga.png)
+![dlstreamer-test](dlstreamer-8thgeni7yoga.png)
+![dlstreamer-result](dlstreamer-result.png)
 
 - ### ModelServer (OPENCV + GRPC - 2 way)
-![OMS](modelserver-8thgeni7yoga.png)
+    - 0.02sec gRPC predict time per frame
+![OMS-test](modelserver-8thgeni7yoga.png)
+![OMS-result](grpc-result.png)
