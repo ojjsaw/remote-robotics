@@ -7,7 +7,7 @@
 
 int main(int argc, char * argv[]) try
 {
-    rs2::net_device dev("10.0.0.59");
+    rs2::net_device dev("10.0.0.59:50001");
     rs2::context ctx;
     dev.add_to(ctx);
 

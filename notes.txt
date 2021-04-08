@@ -27,6 +27,6 @@ docker run --network host -p 6080:80 -v $(pwd):/workdir dorowu/ubuntu-desktop-lx
 docker run -it --rm -p 6080:80 -v $(pwd):/root/workdir dorowu/ubuntu-desktop-lxde-vnc
 http://localhost:6080/
 
-docker build -f Dockerfile.rsvnc -t remotersvnc .
+docker build -f Dockerfile.rsvnc -t ojjsaw/remotersvnc .
 
-docker run -it --rm -p 6080:80 remotersvnc
+docker run -it --rm -p 6080:80 ojjsaw/remotersvnc
