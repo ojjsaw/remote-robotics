@@ -1,0 +1,23 @@
+FROM dorowu/ubuntu-desktop-lxde-vnc
+
+RUN apt-key adv --keyserver keys.gnupg.net --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE || sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE
+
+RUN add-apt-repository "deb https://librealsense.intel.com/Debian/apt-repo focal main" -u
+
+RUN apt-get update
+
+RUN apt-get install -y librealsense2-dkms 
+RUN apt-get install -y librealsense2-utils
+RUN apt-get install -y librealsense2-dev 
+RUN apt-get install -y librealsense2-net
+RUN apt-get install -y librealsense2-net-dev
+
+RUN apt install -y libopencv-dev
+RUN apt install -y cmake
+
+COPY rs-test /root/workdir/rs-test
+
+WORKDIR /root/workdir/rs-test
+RUN rm -r build
+RUN mkdir build
+RUN cd build && cmake .. && make
