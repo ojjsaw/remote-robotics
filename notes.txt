@@ -30,3 +30,55 @@ http://localhost:6080/
 docker build -f Dockerfile.rsvnc -t ojjsaw/remotersvnc .
 
 docker run -it --rm -p 6080:80 ojjsaw/remotersvnc
+
+// tcp ext to pi
+ssh -L 10.0.0.108:50001:192.168.130.2:50001 ojjsaw@10.0.0.108
+
+// ubuntu/mate30
+ssh -L 10.0.0.108:50001:192.168.130.2:50001 pi@192.168.130.2
+
+
+//// 6970
+//pi
+socat -T15 udp4-recvfrom:6970,reuseaddr,fork tcp:localhost:7970
+//linux
+ssh -L 192.168.130.2:7970:10.0.0.109:7970 pi@192.168.130.2
+//container
+socat -U tcp4-listen:7970,reuseaddr,fork UDP:10.0.0.109:6970
+
+
+//// 6972
+//pi
+socat -T15 udp4-recvfrom:6972,reuseaddr,fork tcp:192.168.130.2:7972
+//linux
+ssh -L 192.168.130.2:7972:10.0.0.109:7972 ojjsaw@10.0.0.108
+//container
+socat -U tcp4-listen:7972,reuseaddr,fork UDP:10.0.0.109:6972
+
+
+watch -d sudo netstat -ltup
+http://blog.heyzimo.com/ssh-tunnels-udp-tcp/
+
+ssh -L 10.0.0.108:6970:192.168.130.2:6970 ojjsaw@10.0.0.108
+ssh -L 10.0.0.108:6971:192.168.130.2:6971 ojjsaw@10.0.0.108
+ssh -L 10.0.0.108:6972:192.168.130.2:6972 ojjsaw@10.0.0.108
+ssh -L 10.0.0.108:6973:192.168.130.2:6973 ojjsaw@10.0.0.108
+
+
+wlp107s0 (wireless)
+enxd8d0903c6db5 (private)
+cat /proc/sys/net/ipv4/conf/enxd8d0903c6db5/forwarding (is 1)
+cat /proc/sys/net/ipv4/conf/wlp107s0/forwarding (is 1)
+
+
+sudo iptables -A PREROUTING -t nat -i wlp107s0 -p tcp --dport 50001 -j DNAT --to 192.168.130.2:50001
+sudo iptables -A FORWARD -p tcp -d 192.168.130.2 --dport 50001 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+sudo iptables -S
+
+iptables -t nat -A PREROUTING -p tcp --dport 50001 -j DNAT --to-destination 192.168.130.2:50001
+
+iptables -t nat -A PREROUTING -p udp --dport 6970 -j DNAT --to-destination 192.168.130.2:50001
+iptables -t nat -A PREROUTING -p udp --dport 6971 -j DNAT --to-destination 192.168.130.2:50001
+iptables -t nat -A PREROUTING -p udp --dport 6972 -j DNAT --to-destination 192.168.130.2:50001
+iptables -t nat -A PREROUTING -p udp --dport 6973 -j DNAT --to-destination 192.168.130.2:50001
