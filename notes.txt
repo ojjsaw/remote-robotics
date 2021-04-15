@@ -77,6 +77,6 @@ sudo iptables -S
 
 Test1
 ssh -L 10.0.0.108:50001:192.168.130.2:50001 ojjsaw@10.0.0.108 [Works]
-
+docker run -it --network host --rm -v $(pwd):/netstat ojjsaw/remotersvnc
 
 
