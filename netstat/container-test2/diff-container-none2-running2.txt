@@ -1,0 +1,108 @@
+31a32
+> tcp        0      0 10.1.47.1:56746         10.1.47.88:8082         TIME_WAIT  
+35d35
+< tcp        0      0 10.1.47.1:40728         10.1.47.93:8181         TIME_WAIT  
+37d36
+< tcp        0      0 10.1.47.1:51390         10.1.47.93:http-alt     TIME_WAIT  
+40,41c39
+< tcp        0      0 10.1.47.1:51464         10.1.47.93:http-alt     TIME_WAIT  
+< tcp        0      0 localhost:39662         localhost:6079          TIME_WAIT  
+---
+> tcp        0      0 10.0.0.108:54022        10.0.0.59:50001         ESTABLISHED
+42a41
+> tcp        0      0 localhost:39926         localhost:6079          TIME_WAIT  
+44d42
+< tcp        0      0 localhost:6079          localhost:39894         ESTABLISHED
+46,47d43
+< tcp        0      0 10.1.47.1:51572         10.1.47.93:http-alt     TIME_WAIT  
+< tcp        0      0 localhost:39778         localhost:6079          TIME_WAIT  
+58a55
+> tcp        0      0 10.0.0.108:54024        10.0.0.59:50001         ESTABLISHED
+68c65
+< tcp        0      0 localhost:39814         localhost:6079          TIME_WAIT  
+---
+> tcp        0      0 localhost:40118         localhost:6079          ESTABLISHED
+75d71
+< tcp        0      0 10.1.47.1:56638         10.1.47.88:8082         TIME_WAIT  
+77a74
+> tcp        0      0 localhost:6079          localhost:40118         ESTABLISHED
+79c76
+< tcp        0      0 localhost:38342         localhost:6081          ESTABLISHED
+---
+> tcp        0     16 localhost:38342         localhost:6081          ESTABLISHED
+83c80
+< tcp        0      0 localhost:47062         localhost:5900          ESTABLISHED
+---
+> tcp        0     10 localhost:47062         localhost:5900          ESTABLISHED
+88,89d84
+< tcp        0      0 10.1.47.1:51534         10.1.47.93:http-alt     TIME_WAIT  
+< tcp        0      0 10.1.47.1:40620         10.1.47.93:8181         TIME_WAIT  
+95c90,91
+< tcp        0      0 localhost:39894         localhost:6079          ESTABLISHED
+---
+> tcp        0      0 10.1.47.1:40910         10.1.47.93:8181         TIME_WAIT  
+> tcp        0      0 localhost:39894         localhost:6079          TIME_WAIT  
+98d93
+< tcp        0      0 localhost:58850         localhost:http          TIME_WAIT  
+106a102
+> tcp        0      0 10.1.47.1:40836         10.1.47.93:8181         TIME_WAIT  
+109d104
+< tcp        0      0 localhost:39702         localhost:6079          TIME_WAIT  
+110a106
+> tcp        0      0 10.1.47.1:51678         10.1.47.93:http-alt     TIME_WAIT  
+114d109
+< tcp        0      0 localhost:33928         localhost:16443         ESTABLISHED
+117c112
+< tcp     3735      0 localhost:53340         localhost:http          ESTABLISHED
+---
+> tcp        0      0 localhost:53340         localhost:http          ESTABLISHED
+122c117,119
+< tcp        0   3735 localhost:6081          localhost:38342         ESTABLISHED
+---
+> tcp        0   8385 localhost:6081          localhost:38342         ESTABLISHED
+> tcp        0      0 10.1.47.1:51458         10.1.47.90:8000         TIME_WAIT  
+> tcp        0      0 localhost:40034         localhost:6079          TIME_WAIT  
+130c127
+< tcp        0      0 localhost:http          localhost:53340         ESTABLISHED
+---
+> tcp        0    193 localhost:http          localhost:53340         ESTABLISHED
+135a133
+> tcp        0      0 10.1.47.1:51716         10.1.47.93:http-alt     TIME_WAIT  
+137a136
+> tcp        0      0 localhost:40004         localhost:6079          TIME_WAIT  
+216d214
+< tcp6       0      0 localhost:16443         localhost:33928         ESTABLISHED
+261d258
+< udp        0      0 10.1.47.0:43115         0.0.0.0:*                          
+262a260,263
+> udp        0      0 0.0.0.0:43678           0.0.0.0:*                          
+> udp        0      0 0.0.0.0:43679           0.0.0.0:*                          
+> udp        0      0 0.0.0.0:52066           0.0.0.0:*                          
+> udp        0      0 0.0.0.0:52067           0.0.0.0:*                          
+265,266d265
+< udp        0      0 10.1.47.1:36541         0.0.0.0:*                          
+< udp        0      0 10.0.0.108:37620        0.0.0.0:*                          
+384d382
+< unix  3      [ ]         STREAM     CONNECTED     168467   @/tmp/.X11-unix/X1
+399d396
+< unix  3      [ ]         STREAM     CONNECTED     168466   @/tmp/.X11-unix/X1
+451a449
+> unix  3      [ ]         STREAM     CONNECTED     187468   @/tmp/dbus-JH2o3EoCzL
+553d550
+< unix  3      [ ]         STREAM     CONNECTED     172253   
+564a562
+> unix  3      [ ]         STREAM     CONNECTED     181028   
+580c578
+< unix  3      [ ]         STREAM     CONNECTED     172254   
+---
+> unix  3      [ ]         STREAM     CONNECTED     186422   
+605a604
+> unix  3      [ ]         STREAM     CONNECTED     185407   @/tmp/.X11-unix/X1
+672a672
+> unix  3      [ ]         STREAM     CONNECTED     178017   @/tmp/.X11-unix/X1
+713a714
+> unix  3      [ ]         STREAM     CONNECTED     186426   
+850a852
+> unix  3      [ ]         STREAM     CONNECTED     183753   
+920a923
+> unix  3      [ ]         STREAM     CONNECTED     178016   @/tmp/.X11-unix/X1
