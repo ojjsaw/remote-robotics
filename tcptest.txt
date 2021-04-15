@@ -1,0 +1,32 @@
+tcptest
+
+[Mate30Sim]: ssh -L 10.0.0.108:50001:192.168.130.2:50001 ojjsaw@10.0.0.108 [Works]
+
+[Pi]
+pi@raspberrypi:~/librealsense/build/tools/rs-server $ iperf -s -p 50001
+------------------------------------------------------------
+Server listening on TCP port 50001
+TCP window size:  128 KByte (default)
+------------------------------------------------------------
+[  4] local 192.168.130.2 port 50001 connected with 192.168.130.1 port 33670
+[ ID] Interval       Transfer     Bandwidth
+[  4]  0.0-10.1 sec  43.4 MBytes  36.0 Mbits/sec
+
+Proto Recv-Q Send-Q Local Address           Foreign Address         State
+tcp        0      0 192.168.130.2:50001     192.168.130.1:35942     ESTABLISHED
+
+
+[Crux-container]
+root@a8488156169f:/root/workdir/rs-test# iperf -c 10.0.0.108 -p 50001
+------------------------------------------------------------
+Client connecting to 10.0.0.108, TCP port 50001
+TCP window size:  204 KByte (default)
+------------------------------------------------------------
+[  3] local 172.17.0.2 port 47412 connected with 10.0.0.108 port 50001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0-10.0 sec  43.4 MBytes  36.3 Mbits/sec
+
+// netstat
+Proto Recv-Q Send-Q  Local Address           Foreign Address         State
+tcp        0 1533660 a8488156169f:47458      10.0.0.108:50001        ESTABLISHED
+

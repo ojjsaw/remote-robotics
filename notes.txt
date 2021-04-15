@@ -70,15 +70,13 @@ enxd8d0903c6db5 (private)
 cat /proc/sys/net/ipv4/conf/enxd8d0903c6db5/forwarding (is 1)
 cat /proc/sys/net/ipv4/conf/wlp107s0/forwarding (is 1)
 
-
-sudo iptables -A PREROUTING -t nat -i wlp107s0 -p tcp --dport 50001 -j DNAT --to 192.168.130.2:50001
-sudo iptables -A FORWARD -p tcp -d 192.168.130.2 --dport 50001 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
-
 sudo iptables -S
 
-iptables -t nat -A PREROUTING -p tcp --dport 50001 -j DNAT --to-destination 192.168.130.2:50001
 
-iptables -t nat -A PREROUTING -p udp --dport 6970 -j DNAT --to-destination 192.168.130.2:50001
-iptables -t nat -A PREROUTING -p udp --dport 6971 -j DNAT --to-destination 192.168.130.2:50001
-iptables -t nat -A PREROUTING -p udp --dport 6972 -j DNAT --to-destination 192.168.130.2:50001
-iptables -t nat -A PREROUTING -p udp --dport 6973 -j DNAT --to-destination 192.168.130.2:50001
+//post khode sync trials
+
+Test1
+ssh -L 10.0.0.108:50001:192.168.130.2:50001 ojjsaw@10.0.0.108 [Works]
+
+
+
